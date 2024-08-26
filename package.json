@@ -11,30 +11,42 @@
         "package-mac": "electron-packager . FxWatch --platform=darwin --arch=arm64 --out=dist --icon=icon.icns --overwrite",
         "dmg": "electron-installer-dmg dist/FxWatch-darwin-arm64/FxWatch.app FxWatch --out=dist --overwrite --icon=icon.icns",
         "dist": "electron-builder",
-        "release": "electron-builder --publish=always"
+        "release": "dotenv -e .env -- electron-builder --publish=always"
     },
     "build": {
         "appId": "com.primenumsdev.fxwatch",
         "productName": "FxWatch",
         "mac": {
-            "target": ["dmg", "zip"],
+            "target": [
+                "dmg",
+                "zip"
+            ],
             "icon": "icon.icns",
             "category": "public.app-category.productivity"
         },
         "win": {
-            "target": ["nsis", "zip"],
+            "target": [
+                "nsis",
+                "zip"
+            ],
             "publisherName": "PrimenumsDev"
         },
         "linux": {
-            "target": ["AppImage", "deb"]
+            "target": [
+                "AppImage",
+                "deb"
+            ]
         },
-        "publish": [{
-            "provider": "github",
-            "owner": "primenumsdev",
-            "repo": "fx-watch-mac-os-tray-app"
-        }]
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "primenumsdev",
+                "repo": "fx-watch-mac-os-tray-app"
+            }
+        ]
     },
     "devDependencies": {
+        "dotenv-cli": "^7.4.2",
         "electron": "^31.2.1",
         "electron-builder": "^24.13.3",
         "electron-installer-dmg": "^5.0.1",
