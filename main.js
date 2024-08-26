@@ -1,4 +1,5 @@
-const { app, Tray, Menu, nativeImage } = require('electron');
+const { app, Tray, Menu, nativeImage, dialog } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const axios = require('axios');
 
@@ -143,10 +144,43 @@ app.whenReady().then(() => {
     updateTray();
 
     startInterval();
+    autoUpdater.checkForUpdatesAndNotify();
 });
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
+});
+
+// Auto updater event listeners
+autoUpdater.on('update-available', () => {
+    dialog.showMessageBox({
+        type: 'info',
+        title: 'Update Available',
+        message: 'A new version is available. Downloading now...',
+        buttons: ['OK']
+    });
+});
+
+autoUpdater.on('update-downloaded', () => {
+    dialog.showMessageBox({
+        type: 'info',
+        title: 'Update Ready',
+        message: 'A new version has been downloaded. Quit and install now?',
+        buttons: ['Yes', 'Later']
+    }).then(result => {
+        if (result.response === 0) {
+            autoUpdater.quitAndInstall();
+        }
+    });
+});
+
+autoUpdater.on('error', (error) => {
+    dialog.showMessageBox({
+        type: 'error',
+        title: 'Error',
+        message: `Update error: ${error.message}`,
+        buttons: ['OK']
+    });
 });
