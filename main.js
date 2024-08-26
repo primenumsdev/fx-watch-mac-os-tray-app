@@ -19,6 +19,8 @@ let imgUp = path.join(__dirname, 'up-20.png');
 let imgDown = path.join(__dirname, 'down-20.png');
 let imgNone = nativeImage.createEmpty();
 
+// test
+
 function pad(number) {
     return number < 10 ? '0' + number : number;
 }
