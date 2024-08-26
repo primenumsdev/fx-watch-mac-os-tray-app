@@ -1,6 +1,6 @@
 {
     "name": "fx-watch-mac-os-tray-app",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "FxWatch app, helps to track exchange currency rates.",
     "keywords": ["fx", "currency"],
     "author": "primenumsdev",
