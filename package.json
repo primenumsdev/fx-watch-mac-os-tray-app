@@ -10,7 +10,8 @@
         "start": "electron . --trace-warnings",
         "package-mac": "electron-packager . FxWatch --platform=darwin --arch=arm64 --out=dist --icon=icon.icns --overwrite",
         "dmg": "electron-installer-dmg dist/FxWatch-darwin-arm64/FxWatch.app FxWatch --out=dist --overwrite --icon=icon.icns",
-        "dist": "electron-builder"
+        "dist": "electron-builder",
+        "release": "electron-builder --publish=always"
     },
     "build": {
         "appId": "com.primenumsdev.fxwatch",
