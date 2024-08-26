@@ -91,9 +91,9 @@ function buildContextMenu() {
 }
 
 function addTrendHistory(newItem) {
-    trendHistory.push(newItem);
+    trendHistory.unshift(newItem); // add to the start
     if (trendHistory.length > MAX_TREND_HISTORY_LENGTH) {
-        trendHistory.shift(); // Remove the first (oldest) item
+        trendHistory.pop(); // Remove the last (oldest) item
     }
 }
 
