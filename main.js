@@ -10,6 +10,7 @@ const WALUTOMAT_API_KEY = 'YOUR-API-KEY';
 let tray = null;
 let intervalId = null;
 let intervalSec = 5;
+let watchFor = 'USDPLN';
 let lastPrice = 0;
 let trendHistory = [];
 
@@ -44,6 +45,15 @@ function debug() {
     }
 }
 
+function updateWatchFor(newWatchFor) {
+    debug('updating watchFor from', watchFor, 'to', newWatchFor);
+
+    // clear trend history
+    trendHistory = [];
+
+    watchFor = newWatchFor;
+}
+
 function updateInterval(newIntervalSec) {
     debug('updating interval from', intervalSec, 'to', newIntervalSec);
     if (intervalId) {
@@ -64,6 +74,14 @@ function startInterval() {
 
 function buildContextMenu() {
     return Menu.buildFromTemplate([
+        {
+            label: '👀 Watch for',
+            type: 'submenu',
+            submenu: Menu.buildFromTemplate([
+                { label: 'USD/PLN', type: 'radio', checked: watchFor === 'USDPLN', click: () => updateWatchFor('USDPLN') },
+                { label: 'EUR/PLN', type: 'radio', checked: watchFor === 'EURPLN', click: () => updateWatchFor('EURPLN') },
+            ])
+        },
         {
             label: '⏰ Update every',
             type: 'submenu',
@@ -100,7 +118,7 @@ function addTrendHistory(newItem) {
 // Function to update the tray tooltip with API data
 async function updateTray() {
     try {
-        const response = await axios.get('https://api.walutomat.pl/api/v2.0.0/market_fx/best_offers?currencyPair=USDPLN', {
+        const response = await axios.get(`https://api.walutomat.pl/api/v2.0.0/market_fx/best_offers?currencyPair=${watchFor}`, {
             headers: {
                 'X-API-Key': WALUTOMAT_API_KEY
             }
