@@ -39,3 +39,5 @@ You can now open FxWatch by going to your Applications folder and double-clickin
 If macOS is flagging the app as "damaged," you might need to clear the quarantine attributes, run the following command:
 
 `xattr -rd com.apple.quarantine /Applications/FxWatch.app`
+
+Autoupdates works on Win and Linux but on Mac it requires Apple Dev certificate for app to be signed.
