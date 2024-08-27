@@ -19,8 +19,6 @@ let imgUp = path.join(__dirname, 'up-20.png');
 let imgDown = path.join(__dirname, 'down-20.png');
 let imgNone = nativeImage.createEmpty();
 
-// test
-
 function pad(number) {
     return number < 10 ? '0' + number : number;
 }
@@ -146,7 +144,11 @@ app.whenReady().then(() => {
     updateTray();
 
     startInterval();
-    autoUpdater.checkForUpdatesAndNotify();
+
+    // Autoupdates works on Win and Linux but on Mac it requires Apple Dev certificate for app to be signed.
+    if (process.platform !== 'darwin') {
+        autoUpdater.checkForUpdatesAndNotify();
+    }
 });
 
 app.on('window-all-closed', () => {
